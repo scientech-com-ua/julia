@@ -136,7 +136,7 @@ const PAGES = [
 using DelimitedFiles, Test, Mmap, SharedArrays
 
 makedocs(
-    build     = joinpath(pwd(), "_build/html/en"),
+    build     = joinpath(pwd(), "_build/html/ru"),
     modules   = [Base, Core, BuildSysImg, DelimitedFiles, Test, Mmap, SharedArrays],
     clean     = false,
     doctest   = "doctest" in ARGS,
@@ -147,7 +147,7 @@ makedocs(
     format    = "pdf" in ARGS ? :latex : :html,
     sitename  = "The Julia Language",
     authors   = "The Julia Project",
-    analytics = "UA-28835595-6",
+    analytics = "UA-78506615-3",
     pages     = PAGES,
     html_prettyurls = ("deploy" in ARGS),
 )
@@ -162,8 +162,8 @@ if "deploy" in ARGS
     ENV["TRAVIS_JULIA_VERSION"] = "nightly"
 
     deploydocs(
-        repo = "github.com/JuliaLang/julia.git",
-        target = "_build/html/en",
+        repo = "github.com/scientech-com-ua/julia.git",
+        target = "_build/html/ru",
         dirname = "en",
         deps = nothing,
         make = nothing,
