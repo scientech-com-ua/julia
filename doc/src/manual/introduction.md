@@ -1,75 +1,80 @@
-# [Introduction](@id man-introduction)
+# [Введение](@id man-introduction)
 
-Scientific computing has traditionally required the highest performance, yet domain experts have
-largely moved to slower dynamic languages for daily work. We believe there are many good reasons
-to prefer dynamic languages for these applications, and we do not expect their use to diminish.
-Fortunately, modern language design and compiler techniques make it possible to mostly eliminate
-the performance trade-off and provide a single environment productive enough for prototyping and
-efficient enough for deploying performance-intensive applications. The Julia programming language
-fills this role: it is a flexible dynamic language, appropriate for scientific and numerical computing,
-with performance comparable to traditional statically-typed languages.
+Научные вычисления традиционно требовали высокой производительности, но эксперты в этой области
+в основном отдавали предпочтение более медленным динамическим языкам для повседневной работы.
+Мы считаем, что существует много веских причин использовать динамические языки для этих приложений,
+и мы не ожидаем, что их использование уменьшится.
+К счастью, дизайн современных языков и методы компиляции позволяют в основном устранить
+компромисс производительности и обеспечить единую среду, достаточно эффективную для прототипирования и
+достаточно эффективны для развертывания приложений с высокой степенью производительности.
+Язык программирования Julia удовлетворяет этой роли: это гибкий динамический язык,
+подходящий для научных а также прикладных вычислений, а его производительность сопоставима с традиционными
+статически типизированными языками.
 
-Because Julia's compiler is different from the interpreters used for languages like Python or
-R, you may find that Julia's performance is unintuitive at first. If you find that something is
-slow, we highly recommend reading through the [Performance Tips](@ref man-performance-tips) section before trying anything
-else. Once you understand how Julia works, it's easy to write code that's nearly as fast as C.
+Поскольку компилятор Julia отличается от интерпретаторов, используемых для таких языков, как Python или R,
+вы сперва можете обнаружить, что производительность Julia неинтуитивная.
+Если вы обнаружите, что что-либо тормозит, то мы настоятельно рекомендуем прочитать раздел
+[Советы по повышению производительности](@ref man-performance-tips), прежде чем пытаться что-либо еще.
+Как только вы поймете как работает Julia, то легко напишете код, который будет почти такой же быстрый как на C.
 
-Julia features optional typing, multiple dispatch, and good performance, achieved using type inference
-and [just-in-time (JIT) compilation](https://en.wikipedia.org/wiki/Just-in-time_compilation),
-implemented using [LLVM](https://en.wikipedia.org/wiki/Low_Level_Virtual_Machine). It is multi-paradigm,
-combining features of imperative, functional, and object-oriented programming. Julia provides
-ease and expressiveness for high-level numerical computing, in the same way as languages such
-as R, MATLAB, and Python, but also supports general programming. To achieve this, Julia builds
-upon the lineage of mathematical programming languages, but also borrows much from popular dynamic
-languages, including [Lisp](https://en.wikipedia.org/wiki/Lisp_(programming_language)), [Perl](https://en.wikipedia.org/wiki/Perl_(programming_language)),
-[Python](https://en.wikipedia.org/wiki/Python_(programming_language)), [Lua](https://en.wikipedia.org/wiki/Lua_(programming_language)),
-and [Ruby](https://en.wikipedia.org/wiki/Ruby_(programming_language)).
+В Julia присутствует опциональная типизация, множественная диспетчеризация и хорошая производительность,
+достигаемая с помощью вывода типа и
+[компиляции в машинный код непосредственно во время работы программы (JIT)](https://ru.wikipedia.org/wiki/JIT),
+реализованной с использованием [LLVM](https://ru.wikipedia.org/wiki/Low_Level_Virtual_Machine).
+Это мультипарадигма, сочетающая функции императивного, функционального и объектно-ориентированного программирования.
+Julia обеспечивает простоту и выразительность для высокоуровневых численных вычислений так же как и такие языки,
+как R, MATLAB и Python, но также поддерживает общее программирование.
+Чтобы достичь этого, Julia основывается на родословной языков математического программирования,
+но также сильно заимствует у популярных динамических языков, включая [Lisp](https://ru.wikipedia.org/wiki/Lisp),
+[Perl](https://ru.wikipedia.org/wiki/Perl), [Python](https://ru.wikipedia.org/wiki/Python),
+[Lua](https://ru.wikipedia.org/wiki/Lua) и [Ruby](https://ru.wikipedia.org/wiki/Ruby).
 
-The most significant departures of Julia from typical dynamic languages are:
+Наиболее значительными отклонениями Юлии от типичных динамических языков являются:
 
-  * The core language imposes very little; the standard library is written in Julia itself, including
-    primitive operations like integer arithmetic
-  * A rich language of types for constructing and describing objects, that can also optionally be
-    used to make type declarations
-  * The ability to define function behavior across many combinations of argument types via [multiple dispatch](https://en.wikipedia.org/wiki/Multiple_dispatch)
-  * Automatic generation of efficient, specialized code for different argument types
-  * Good performance, approaching that of statically-compiled languages like C
+  * Ядро языка реализует очень маленькая стандартная библиотека написаная на самой Julia,
+    включает примитивные операции, например как целочисленная арифметика
+  * Язык богатый набором типов для построения и описания объектов, которые в свою очередь,
+    также могут быть использованы для объявления новых типов
+  * Возможность определять поведение функции для многих комбинаций типов аргументов посредством
+    [множественной диспетчеризации](https://ru.wikipedia.org/wiki/%D0%9C%D1%83%D0%BB%D1%8C%D1%82%D0%B8%D0%BC%D0%B5%D1%82%D0%BE%D0%B4)
+  * Автоматическая генерация эффективного специализированного кода для разных типов аргументов
+  * Хорошая производительность, приближающаяся к статически компилируемым языкам, таких как C 
 
-Although one sometimes speaks of dynamic languages as being "typeless", they are definitely not:
-every object, whether primitive or user-defined, has a type. The lack of type declarations in
-most dynamic languages, however, means that one cannot instruct the compiler about the types of
-values, and often cannot explicitly talk about types at all. In static languages, on the other
-hand, while one can -- and usually must -- annotate types for the compiler, types exist only at
-compile time and cannot be manipulated or expressed at run time. In Julia, types are themselves
-run-time objects, and can also be used to convey information to the compiler.
+Хотя иногда говорят о динамических языках как о «нетипизированных», они, определенно, не являются такими:
+все объекты, как примитивные, так и определяемые пользователем, имеют тип.
+Однако отсутствие объявлений типов в большинстве динамических языков означает,
+что нельзя указать компилятору о типах значений и часто нельзя явно говорить о типах вообще.
+С другой стороны, в статических языках, хотя каждый может (и обычно должен) аннотировать типы для компилятора,
+типы существуют только во время компиляции и не могут манипулироваться или выражаться во время выполнения.
+В Julia типы сами по себе являются объектами времени выполнения,
+а также могут использоваться для передачи информации компилятору.
 
-While the casual programmer need not explicitly use types or multiple dispatch, they are the core
-unifying features of Julia: functions are defined on different combinations of argument types,
-and applied by dispatching to the most specific matching definition. This model is a good fit
-for mathematical programming, where it is unnatural for the first argument to "own" an operation
-as in traditional object-oriented dispatch. Operators are just functions with special notation
--- to extend addition to new user-defined data types, you define new methods for the `+` function.
-Existing code then seamlessly applies to the new data types.
+В то время как простому программисту не нужно явно использовать типы или множественную диспетчеризацию,
+они являются основными унифицирующими свойствами Julia: функции определены для разных комбинаций типов аргументов
+и применяются путем отправки в наиболее точно соответствующее определение.
+Эта модель хорошо подходит для математического программирования, где для первого аргумента неестественно «владеть» операцией,
+как в традиционной объектно-ориентированной диспетчеризации.
+Операторы - это просто функции со специальными обозначениями - чтобы расширить дополнение к новым пользовательским типам данных,
+вы определяете новые методы для функции `+`. Существующий код затем легко применяется к новым типам данных.
 
-Partly because of run-time type inference (augmented by optional type annotations), and partly
-because of a strong focus on performance from the inception of the project, Julia's computational
-efficiency exceeds that of other dynamic languages, and even rivals that of statically-compiled
-languages. For large scale numerical problems, speed always has been, continues to be, and probably
-always will be crucial: the amount of data being processed has easily kept pace with Moore's Law
-over the past decades.
+Частично из-за вывода типа времени выполнения (дополненного дополнительными аннотациями типа),
+а отчасти из-за сильного акцента на производительности с самого начала проекта,
+вычислительная эффективность Julia превышает эффективность других динамических языков и даже соперников,
+которые статически компилируемы. Для крупномасштабных числовых задач скорость всегда была, по-прежнему остается, и, вероятно,
+всегда будет иметь решающее значение: количество обрабатываемых данных легко отстает от Закона Мура за последние десятилетия.
 
-Julia aims to create an unprecedented combination of ease-of-use, power, and efficiency in a single
-language. In addition to the above, some advantages of Julia over comparable systems include:
+Джулия стремится создать беспрецедентную комбинацию простоты использования, мощности и эффективности в одном языке.
+В дополнение к вышесказанному, некоторые преимущества Julia над сопоставимыми системами включают:
 
-  * Free and open source ([MIT licensed](https://github.com/JuliaLang/julia/blob/master/LICENSE.md))
-  * User-defined types are as fast and compact as built-ins
-  * No need to vectorize code for performance; devectorized code is fast
-  * Designed for parallelism and distributed computation
-  * Lightweight "green" threading ([coroutines](https://en.wikipedia.org/wiki/Coroutine))
-  * Unobtrusive yet powerful type system
-  * Elegant and extensible conversions and promotions for numeric and other types
-  * Efficient support for [Unicode](https://en.wikipedia.org/wiki/Unicode), including but not limited
-    to [UTF-8](https://en.wikipedia.org/wiki/UTF-8)
-  * Call C functions directly (no wrappers or special APIs needed)
-  * Powerful shell-like capabilities for managing other processes
-  * Lisp-like macros and other metaprogramming facilities
+  * Бесплатный и открытый исходный код ([MIT лицензия](https://github.com/JuliaLang/julia/blob/master/LICENSE.md))
+  * Пользовательские типы являются такими же быстрыми и компактными, как встроенные
+  * Нет необходимости векторизовать код для выполнения; невекторизированный код быстр
+  * Предназначен для параллелизма и распределенных вычислений
+  * Легкие "green" потоки ([coroutines](https://ru.wikipedia.org/wiki/%D0%A1%D0%BE%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0))
+  * Ненавязчивая, но мощная система типов
+  * Элегантные и расширяемые трансформации (conversions) и стимуляции (promotions) для цифровых и других типов
+  * Эффективная поддержка [Unicode](https://ru.wikipedia.org/wiki/Unicode),
+    включающая, но не ограниченная, одной лишь [UTF-8](https://ru.wikipedia.org/wiki/UTF-8)
+  * Вызов C функций напрямую (без необходимости в обертках или специального API)
+  * Мощные шелл-подобные возможности для управления другими процессами
+  * Лиспоподобные макросы и другие средства метапрограммирования
