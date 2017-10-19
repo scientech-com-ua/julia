@@ -1893,6 +1893,10 @@ end
 # issue #24006
 @deprecate linearindices(s::AbstractString) eachindex(s)
 
+# Issue 24219
+@deprecate float(x::AbstractString) parse(Float64, x)
+@deprecate float(a::AbstractArray{<:AbstractString}) map(x->parse(Float64, x), a)
+
 # END 0.7 deprecations
 
 # BEGIN 1.0 deprecations
